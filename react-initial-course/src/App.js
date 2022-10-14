@@ -1,25 +1,35 @@
-import logo from './logo.svg';
-import './App.css';
+import React  from 'react';
+// import logo from './logo.svg';
+import { ToDoCounter } from './ToDoCounter';
+import { ToDoSearch } from './ToDoSearch';
+import { ToDoList } from './ToDoList';
+import { ToDoItem } from './ToDoItem';
+import { CreateToDoButton } from './CreateToDoButton';
+// import './App.css';
+
+const toDos = [
+  {text: 'Cortar cebolla', completed: false},
+  {text: 'Curso React', completed: false},
+  {text: 'Planchar Ropa', completed: false},
+]
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Understanding how JSX Works
-        </a>
-      </header>
-    </div>
-  );
+
+    <React.Fragment>
+      <ToDoCounter />
+      <ToDoSearch />
+
+      <ToDoList>
+          {toDos.map(todo => (
+            <ToDoItem key={todo.text} text={todo.text}/>
+          ))}
+      </ToDoList>
+
+      {<CreateToDoButton/>}
+    </React.Fragment>
+    
+    );
 }
 
 export default App;
