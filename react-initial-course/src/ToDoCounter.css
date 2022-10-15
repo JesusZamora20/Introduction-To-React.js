@@ -1,0 +1,13 @@
+:root {
+    --backgroundColor: #abebc6;
+    --primaryColor: #0b5345;
+    --secondaryColor: #239b56;
+}
+
+.ToDoCounter {
+    font-size: 24px;
+    margin: 0 30px;
+    padding-bottom: 30px;
+    padding-top: 30px;
+    color: var(--primaryColor);
+  }

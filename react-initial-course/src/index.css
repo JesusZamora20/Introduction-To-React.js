@@ -1,10 +1,16 @@
+:root {
+  --backgroundColor: #abebc6;
+  --primaryColor: #0b5345;
+  --secondaryColor: #239b56;
+}
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  padding: 0;
+  font-family: 'Poppins',sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background: var(--backgroundColor);
 }
 
 code {

@@ -5,7 +5,7 @@ import { ToDoSearch } from './ToDoSearch';
 import { ToDoList } from './ToDoList';
 import { ToDoItem } from './ToDoItem';
 import { CreateToDoButton } from './CreateToDoButton';
-// import './App.css';
+import './App.css';
 
 const toDos = [
   {text: 'Cortar cebolla', completed: false},
@@ -22,7 +22,10 @@ function App() {
 
       <ToDoList>
           {toDos.map(todo => (
-            <ToDoItem key={todo.text} text={todo.text}/>
+            <ToDoItem 
+            key={todo.text} 
+            text={todo.text}
+            completed={todo.completed}/>
           ))}
       </ToDoList>
 

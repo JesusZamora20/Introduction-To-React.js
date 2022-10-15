@@ -1,0 +1,30 @@
+:root {
+    --backgroundColor: #abebc6;
+    --primaryColor: #0b5345;
+    --secondaryColor: #239b56;
+}
+
+.CreateToDoButton {
+    background-color: var(--primaryColor);
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 50px;
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    font-weight: bold;
+    color: #FAFAFA;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 64px;
+    width: 64px;
+  
+    transform: rotate(0);
+    transition: 1s ease;
+  }
+  
+  .CreateToDoButton:hover {
+    transform: rotate(180deg);
+  }
