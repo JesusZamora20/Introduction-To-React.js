@@ -25,7 +25,7 @@
     line-height: 24px;
     font-weight: 400;
   }
-  .ToDoItem-p--complete {
+  .ToDoItem-p--complete{
     text-decoration: line-through;
   }
   
