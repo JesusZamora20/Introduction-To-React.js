@@ -8,10 +8,10 @@ import { CreateToDoButton } from './CreateToDoButton';
 import './App.css';
 
 const defaultToDos = [
-  {text: 'Cortar cebolla', completed: true},
-  {text: 'Curso React', completed: false},
-  {text: 'Planchar Ropa', completed: false},
-  {text: 'Jugar futbol', completed: false},
+  {text: 'Cook Dinner', completed: false},
+  {text: 'React Course', completed: false},
+  {text: 'Iron clothe', completed: false},
+  {text: 'Play soccer', completed: false},
 ]
 
 function App() {
@@ -20,6 +20,7 @@ function App() {
   const completedToDos = toDos.filter(todo =>  !!todo.completed).length;
   const totalToDos = toDos.length;
 
+  // ;Looking for toDos in the search bar
   let searchedToDos = [];
 
   if(!searchValue.length >= 1){
@@ -30,6 +31,24 @@ function App() {
       const searchText = searchValue.toLowerCase();
       return toDoText.includes(searchText);
     });
+  }
+
+  // Completing ToDos
+
+  const completeToDo = (text) => {
+    const toDoIndex = toDos.findIndex(todo => todo.text === text);
+    const newToDos = [...toDos];
+    newToDos[toDoIndex].completed = true;
+    setToDos(newToDos);
+  }
+
+  // Deleting ToDos
+
+  const deleteToDo = (text) => {
+    const toDoIndex = toDos.findIndex(todo => todo.text === text);
+    const newToDos = [...toDos];
+    newToDos.splice(toDoIndex,1);
+    setToDos(newToDos);
   }
 
   return(
@@ -48,7 +67,10 @@ function App() {
             <ToDoItem 
             key={todo.text} 
             text={todo.text}
-            completed={todo.completed}/>
+            completed={todo.completed}
+            onComplete = {() => completeToDo(todo.text)}
+            onDelete = {() => deleteToDo(todo.text)}
+            />
           ))}
       </ToDoList>
 
