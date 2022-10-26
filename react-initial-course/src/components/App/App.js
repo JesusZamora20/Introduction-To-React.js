@@ -9,7 +9,18 @@ const defaultToDos = [
 ]
 
 function App() {
-  const [toDos, setToDos] = React.useState(defaultToDos);
+
+  const localStorageToDos = localStorage.getItem('ToDos__v1');
+  let parsedToDos;
+
+  if(!localStorageToDos){
+    localStorage.setItem('ToDos__v1',JSON.stringify([]));
+    parsedToDos = [];
+  } else{
+    parsedToDos = JSON.parse(localStorageToDos);
+  }
+
+  const [toDos, setToDos] = React.useState(parsedToDos);
   const [searchValue, setSearchValue] = React.useState('');
   const completedToDos = toDos.filter(todo =>  !!todo.completed).length;
   const totalToDos = toDos.length;
@@ -27,13 +38,19 @@ function App() {
     });
   }
 
+  const saveToDos = (newToDos) => {
+    const stringifiedToDos = JSON.stringify(newToDos);
+    localStorage.setItem('ToDos__v1', stringifiedToDos);
+    setToDos(newToDos);
+  }
+
   // Completing ToDos
 
   const completeToDo = (text) => {
     const toDoIndex = toDos.findIndex(todo => todo.text === text);
     const newToDos = [...toDos];
     newToDos[toDoIndex].completed = true;
-    setToDos(newToDos);
+    saveToDos(newToDos);
   }
 
   // Deleting ToDos
@@ -42,7 +59,7 @@ function App() {
     const toDoIndex = toDos.findIndex(todo => todo.text === text);
     const newToDos = [...toDos];
     newToDos.splice(toDoIndex,1);
-    setToDos(newToDos);
+    saveToDos(newToDos);
   }
 
   return(
