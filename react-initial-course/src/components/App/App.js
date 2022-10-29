@@ -1,26 +1,42 @@
 import React  from 'react';
 import {AppUI} from './AppUI';
 
-const defaultToDos = [
-  {text: 'Cook Dinner', completed: false},
-  {text: 'React Course', completed: false},
-  {text: 'Iron clothe', completed: false},
-  {text: 'Play soccer', completed: false},
-]
+// const defaultToDos = [
+//   {text: 'Cook Dinner', completed: false},
+//   {text: 'React Course', completed: false},
+//   {text: 'Iron clothe', completed: false},
+//   {text: 'Play soccer', completed: false},
+// ]
 
-function App() {
-
-  const localStorageToDos = localStorage.getItem('ToDos__v1');
-  let parsedToDos;
-
-  if(!localStorageToDos){
-    localStorage.setItem('ToDos__v1',JSON.stringify([]));
-    parsedToDos = [];
+function useLocalStorage(itemName, initialValue){
+  
+  const localStorageItem = localStorage.getItem(itemName);
+  let parsedItem;
+  
+  if(!localStorageItem){
+    localStorage.setItem(itemName,JSON.stringify(initialValue));
+    parsedItem = initialValue;
   } else{
-    parsedToDos = JSON.parse(localStorageToDos);
+    parsedItem = JSON.parse(localStorageItem);
+  }
+  
+  const [item, setItem] = React.useState(parsedItem);
+
+  const saveItem = (newItem) => {
+    const stringifiedItem = JSON.stringify(newItem);
+    localStorage.setItem('itemName', stringifiedItem);
+    setItem(newItem);
   }
 
-  const [toDos, setToDos] = React.useState(parsedToDos);
+  return [
+    item,
+    saveItem,
+  ]
+}
+
+function App() {
+  const [toDos, saveToDos] =useLocalStorage('ToDos__v1',[]);
+  
   const [searchValue, setSearchValue] = React.useState('');
   const completedToDos = toDos.filter(todo =>  !!todo.completed).length;
   const totalToDos = toDos.length;
@@ -36,12 +52,6 @@ function App() {
       const searchText = searchValue.toLowerCase();
       return toDoText.includes(searchText);
     });
-  }
-
-  const saveToDos = (newToDos) => {
-    const stringifiedToDos = JSON.stringify(newToDos);
-    localStorage.setItem('ToDos__v1', stringifiedToDos);
-    setToDos(newToDos);
   }
 
   // Completing ToDos
