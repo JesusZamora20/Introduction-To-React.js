@@ -1,41 +1,55 @@
 import React  from 'react';
 import {AppUI} from './AppUI';
 
-// const defaultToDos = [
-//   {text: 'Cook Dinner', completed: false},
-//   {text: 'React Course', completed: false},
-//   {text: 'Iron clothe', completed: false},
-//   {text: 'Play soccer', completed: false},
-// ]
 
 function useLocalStorage(itemName, initialValue){
-  
-  const localStorageItem = localStorage.getItem(itemName);
-  let parsedItem;
-  
-  if(!localStorageItem){
-    localStorage.setItem(itemName,JSON.stringify(initialValue));
-    parsedItem = initialValue;
-  } else{
-    parsedItem = JSON.parse(localStorageItem);
-  }
-  
-  const [item, setItem] = React.useState(parsedItem);
 
+  const [loading, setLoading] = React.useState(true);
+  const [item, setItem] = React.useState(initialValue);
+  const [error, setError] = React.useState(false);
+
+  React.useEffect(() => {
+    setTimeout(() => {
+      try{
+      const localStorageItem = localStorage.getItem(itemName);
+      let parsedItem;
+      
+      if(!localStorageItem){
+        localStorage.setItem(itemName,JSON.stringify(initialValue));
+        parsedItem = initialValue;
+      } else{
+        parsedItem = JSON.parse(localStorageItem);
+      }
+      setItem(parsedItem);
+      } catch(error){
+        setError(error);
+      }finally{
+        setLoading(false);
+      }
+    }, 1000);
+    
+  });
+  
   const saveItem = (newItem) => {
-    const stringifiedItem = JSON.stringify(newItem);
-    localStorage.setItem('itemName', stringifiedItem);
-    setItem(newItem);
+    try{
+      const stringifiedItem = JSON.stringify(newItem);
+      localStorage.setItem(itemName, stringifiedItem);
+      setItem(newItem);
+    } catch(error){
+      setError(error);
+    }
   }
 
-  return [
+  return {
     item,
     saveItem,
-  ]
+    loading,
+    error
+  }
 }
 
 function App() {
-  const [toDos, saveToDos] =useLocalStorage('ToDos__v1',[]);
+  const {item:toDos, saveItem:saveToDos, loading, error} =useLocalStorage('ToDos__v1',[]);
   
   const [searchValue, setSearchValue] = React.useState('');
   const completedToDos = toDos.filter(todo =>  !!todo.completed).length;
@@ -74,6 +88,8 @@ function App() {
 
   return(
     <AppUI 
+    loading={loading}
+    error={error}
     completedToDos={completedToDos}
     totalToDos={totalToDos}
     searchValue = {searchValue}
