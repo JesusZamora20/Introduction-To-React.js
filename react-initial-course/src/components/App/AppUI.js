@@ -6,9 +6,16 @@ import { ToDoItem } from '../ToDoItem/ToDoItem';
 import { CreateToDoButton } from '../CreateToDoButton/CreateToDoButton';
 import { toDoContext} from "../ToDoContext/ToDoContext";
 import './App.css';
+import {Modal} from "../Modal/Modal"
 
 function AppUI(){
-    const {error,loading,searchedToDos,completeToDo,deleteToDo} = React.useContext(toDoContext);
+    const {error,
+      loading,
+      searchedToDos,
+      completeToDo,
+      deleteToDo,
+      openModal,
+      setOpenModal} = React.useContext(toDoContext);
     return(
     <React.Fragment>
       <ToDoCounter/>
@@ -30,8 +37,16 @@ function AppUI(){
         ))}
       </ToDoList>
 
+      {openModal && (
+        <Modal>
+          <p>Teletransportacioooon</p>
+        </Modal>
+      )}
 
-      {<CreateToDoButton/>}
+      {<CreateToDoButton
+        setOpenModal={ setOpenModal}
+        openModal={openModal}
+      />}
     </React.Fragment>
     );
 }

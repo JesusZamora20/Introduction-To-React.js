@@ -2,14 +2,20 @@ import React from "react";
 import './CreateToDoButton.css';
 
 function CreateToDoButton(props){
-    const onClickButton = (msg) =>  {
-        alert(msg);
+
+    
+    const onClickButton = () =>  {
+        if(props.openModal){
+            props.setOpenModal(false);
+        }else{
+            props.setOpenModal(true);
+        }
     };
 
     return(
         <button 
             className="CreateToDoButton"
-            onClick={() => onClickButton('Holiiiii')}
+            onClick={onClickButton}
         
         >+</button>
     );
