@@ -33,6 +33,16 @@ function ToDoProvider(props){
     newToDos[toDoIndex].completed = true;
     saveToDos(newToDos);
 }
+  // Add ToDos
+
+  const addToDo = (text) => {
+    const newToDos = [...toDos];
+    newToDos.push({
+      completed : false,
+      text,  
+    });
+    saveToDos(newToDos);
+  }
 
   // Deleting ToDos
 
@@ -52,6 +62,7 @@ function ToDoProvider(props){
             setSearchValue,
             searchedToDos ,
             completeToDo,
+            addToDo,
             deleteToDo,
             openModal,
             setOpenModal

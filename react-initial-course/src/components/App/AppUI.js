@@ -7,6 +7,7 @@ import { CreateToDoButton } from '../CreateToDoButton/CreateToDoButton';
 import { toDoContext} from "../ToDoContext/ToDoContext";
 import './App.css';
 import {Modal} from "../Modal/Modal"
+import { ToDoForm } from "../ToDoForm/ToDoForm";
 
 function AppUI(){
     const {error,
@@ -39,7 +40,7 @@ function AppUI(){
 
       {openModal && (
         <Modal>
-          <p>Teletransportacioooon</p>
+          <ToDoForm/>
         </Modal>
       )}
 
